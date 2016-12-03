@@ -9,6 +9,9 @@ import android.view.SurfaceHolder;
 
 import java.io.IOException;
 
+import static android.os.Build.VERSION.SDK;
+import static android.os.Build.VERSION.SDK_INT;
+
 /**
  * Created by jay on 12/2/16.
  */
@@ -22,6 +25,8 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
         super(context);
         mCamera = camera;
         mCamera.setDisplayOrientation(90);
+        if(SDK_INT >= 17)
+            mCamera.enableShutterSound(true);
         //get the holder and set this class as the callback, so we can get camera data here
         mHolder = getHolder();
         mHolder.addCallback(this);
