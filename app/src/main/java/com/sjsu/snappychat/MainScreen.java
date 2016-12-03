@@ -66,10 +66,8 @@ public class MainScreen extends AppCompatActivity {
     private Camera.PictureCallback mPicture = new Camera.PictureCallback() {
         @Override
         public void onPictureTaken(byte[] data,Camera camera) {
-            Log.d("PIC","Inside picture taken");
             String content = Base64.encodeToString(data,0);
-            camera.stopPreview();
-            Log.d("Pic",content);
+            mCamera.stopPreview();
             postProcess(data);
         }
     };
@@ -114,7 +112,6 @@ public class MainScreen extends AppCompatActivity {
     }
 
     public void postProcess(byte[] picture){
-
         Bitmap bm = BitmapFactory.decodeByteArray(picture, 0, picture.length);
         int width = bm.getWidth();
         int height = bm.getHeight();
@@ -135,7 +132,6 @@ public class MainScreen extends AppCompatActivity {
         discard.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                //Toast.makeText(context,"Discard",Toast.LENGTH_SHORT).show();
                 onStart();
             }
         });
@@ -158,11 +154,8 @@ public class MainScreen extends AppCompatActivity {
     private void askForCaption(){
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         final EditText edittext = new EditText(context);
-        //alert.setMessage("Enter Your Message");
         alert.setTitle("Caption");
-
         alert.setView(edittext);
-
         alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 Editable YouEditTextValue = edittext.getText();
@@ -170,7 +163,6 @@ public class MainScreen extends AppCompatActivity {
                 // send it to cloud
             }
         });
-
         alert.show();
     }
 }
