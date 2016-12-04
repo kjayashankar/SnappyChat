@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,6 +22,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +30,7 @@ import java.util.List;
 public class ChatActivity extends AppCompatActivity implements
         AdapterView.OnItemClickListener {
     private static final int CAMERA_REQUEST_INTENT = 1016;
+    private static final int SELECT_PHOTO = 1017;
     private Bitmap capturedImage = null;
     List<String> list = new ArrayList<String>();
     List<ChatMessage> chatMessages = null;
@@ -125,10 +129,9 @@ public class ChatActivity extends AppCompatActivity implements
                     gallery.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent galleryIntent = new Intent(
-                                    Intent.ACTION_PICK,
-                                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                            startActivityForResult(galleryIntent , CAMERA_REQUEST_INTENT );
+                            Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                            photoPickerIntent.setType("image/*");
+                            startActivityForResult(photoPickerIntent, SELECT_PHOTO);
                         }
                     });
                     layout.addView(camera);
@@ -191,5 +194,15 @@ public class ChatActivity extends AppCompatActivity implements
         if (requestCode == CAMERA_REQUEST_INTENT && resultCode == Activity.RESULT_OK) {
             capturedImage = (Bitmap) data.getExtras().get("data");
         }
+        else if (requestCode == SELECT_PHOTO && resultCode == Activity.RESULT_OK) {
+            Uri selectedImage = data.getData();
+            try {
+                InputStream imageStream = getContentResolver().openInputStream(selectedImage);
+                capturedImage = BitmapFactory.decodeStream(imageStream);
+            }
+            catch(Exception e) {
+                Log.d("GALLERY","Exception in gallery result intent");
+        }
+    }
     }
 }
