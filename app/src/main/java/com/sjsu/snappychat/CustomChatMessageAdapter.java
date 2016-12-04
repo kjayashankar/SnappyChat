@@ -2,13 +2,11 @@ package com.sjsu.snappychat;
 
 import android.app.Activity;
 import android.content.Context;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -29,9 +27,12 @@ public class CustomChatMessageAdapter extends ArrayAdapter<ChatMessage> {
     }
 
     private class ViewHolder {
-        ImageView imageView;
+        ImageView displayPicture;
+        ImageView chatPicture;
+        ImageView chatPictureLeft;
         TextView chatText;
         TextView chatTextLeft;
+
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -44,22 +45,24 @@ public class CustomChatMessageAdapter extends ArrayAdapter<ChatMessage> {
             convertView = mInflater.inflate(R.layout.chat_message, null);
             holder = new ViewHolder();
             holder.chatText = (TextView) convertView.findViewById(R.id.chat_text);
-            holder.imageView = (ImageView) convertView.findViewById(R.id.icon);
+            holder.displayPicture = (ImageView) convertView.findViewById(R.id.icon);
             holder.chatTextLeft = (TextView) convertView.findViewById(R.id.chat_text_left);
+            holder.chatPicture = (ImageView) convertView.findViewById(R.id.chat_image);
             convertView.setTag(holder);
         } else
             holder = (CustomChatMessageAdapter.ViewHolder) convertView.getTag();
 
-        if(rowItem.getChatText().equalsIgnoreCase("ME")) {
-            RelativeLayout.LayoutParams paramsImage = (RelativeLayout.LayoutParams) holder.imageView.getLayoutParams();
+        if(rowItem.getUser().equalsIgnoreCase("ME")) {
+            RelativeLayout.LayoutParams paramsImage = (RelativeLayout.LayoutParams) holder.displayPicture.getLayoutParams();
             paramsImage.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
-            holder.imageView.setLayoutParams(paramsImage);
-            holder.imageView.setImageResource(rowItem.getImageID());
+            holder.displayPicture.setLayoutParams(paramsImage);
+            holder.displayPicture.setImageResource(rowItem.getDisplayImage());
             holder.chatTextLeft.setText(rowItem.getChatText());
         }
         else{
+            holder.chatPicture.setImageResource(rowItem.getChatImage());
             holder.chatText.setText(rowItem.getChatText());
-            holder.imageView.setImageResource(rowItem.getImageID());
+            holder.displayPicture.setImageResource(rowItem.getDisplayImage());
 
         }
 

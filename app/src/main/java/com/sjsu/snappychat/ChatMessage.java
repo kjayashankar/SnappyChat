@@ -5,21 +5,24 @@ package com.sjsu.snappychat;
  */
 
 public class ChatMessage {
-    private int imageID;
+    private int displayImage;
     private String chatText;
+    private int chatImage;
+    private String user;
 
-    public ChatMessage(int imageID,String chatText){
-        this.imageID = imageID;
+    public ChatMessage(int displayImage, int chatImage,String chatText,String user){
+        this.displayImage = displayImage;
+        this.chatImage = chatImage;
         this.chatText = chatText;
+        this.user = user;
     }
 
-
-    public int getImageID() {
-        return imageID;
+    public int getDisplayImage() {
+        return displayImage;
     }
 
-    public void setImageID(int imageID) {
-        this.imageID = imageID;
+    public void setDisplayImage(int displayImage) {
+        this.displayImage = displayImage;
     }
 
     public String getChatText() {
@@ -28,5 +31,21 @@ public class ChatMessage {
 
     public void setChatText(String chatText) {
         this.chatText = chatText;
+    }
+
+    public int getChatImage() {
+        return chatImage;
+    }
+
+    public void setChatImage(int chatImage) {
+        this.chatImage = chatImage;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
     }
 }
