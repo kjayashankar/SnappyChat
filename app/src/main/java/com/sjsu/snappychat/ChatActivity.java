@@ -1,35 +1,28 @@
 package com.sjsu.snappychat;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Point;
-import android.graphics.Rect;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.R.attr.bitmap;
-import static android.R.attr.drawable;
 
 public class ChatActivity extends AppCompatActivity implements
         AdapterView.OnItemClickListener {
@@ -40,19 +33,21 @@ public class ChatActivity extends AppCompatActivity implements
     ListView listView;
     List<ChatItem> chatItems;
     private String chatSession = "";
-
+    private Context context= null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         listView = (ListView) findViewById(R.id.listView);
+        context = this;
         onStart();
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
+        Log.d("TAg","On resume method");
         if(chatSession.length() > 0 ) {
             startChatSession(chatSession);
         }
@@ -75,6 +70,13 @@ public class ChatActivity extends AppCompatActivity implements
             listView.setAdapter(adapter);
             listView.setOnItemClickListener(this);
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d("TAG","On start method");
+
     }
 
     @Override
@@ -103,8 +105,38 @@ public class ChatActivity extends AppCompatActivity implements
             capturePicture.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(cameraIntent, CAMERA_REQUEST_INTENT);
+
+                    AlertDialog.Builder alert = new AlertDialog.Builder(context);
+                    final LinearLayout layout = new LinearLayout(context);
+
+                    ImageView camera = new ImageView(context);
+                    camera.setImageResource(R.drawable.click);
+
+                    camera.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                            startActivityForResult(cameraIntent, CAMERA_REQUEST_INTENT);
+                        }
+                    });
+                    ImageView gallery = new ImageView(context);
+
+                    gallery.setImageResource(R.drawable.common_plus_signin_btn_text_light);
+                    gallery.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent galleryIntent = new Intent(
+                                    Intent.ACTION_PICK,
+                                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                            startActivityForResult(galleryIntent , CAMERA_REQUEST_INTENT );
+                        }
+                    });
+                    layout.addView(camera);
+                    layout.addView(gallery);
+                    alert.setView(layout);
+
+                    alert.show();
+
                 }
             });
         }
