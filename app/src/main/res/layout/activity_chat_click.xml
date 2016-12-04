@@ -14,16 +14,28 @@
         android:layout_above="@+id/sendChat"/>
 
     <EditText
+        android:gravity="left"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:id="@+id/chatText"
-        android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/sendChat"/>
+        android:paddingLeft="5dp"
+        android:layout_alignParentBottom="true"/>
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="40dp"
+        android:id="@+id/clickPicture"
+        android:paddingBottom="5dp"
+        android:gravity="center_vertical"
+        android:background="@drawable/click"
+        android:layout_toRightOf="@+id/chatText"
+        android:layout_alignParentBottom="true"
+        />
+    <Button
+        android:gravity="right"
+        android:layout_width="30dp"
         android:layout_height="wrap_content"
         android:id="@+id/sendChat"
-        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/clickPicture"
         android:layout_alignParentBottom="true"
         />
     </RelativeLayout>

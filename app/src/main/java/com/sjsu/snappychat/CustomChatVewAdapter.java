@@ -54,4 +54,15 @@ public class CustomChatVewAdapter extends ArrayAdapter<ChatItem> {
 
         return convertView;
     }
+    @Override
+    public int getViewTypeCount() {
+
+        return getCount();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+
+        return position;
+    }
 }
