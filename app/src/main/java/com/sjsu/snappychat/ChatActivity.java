@@ -1,16 +1,25 @@
 package com.sjsu.snappychat;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.io.FileNotFoundException;
@@ -31,6 +40,7 @@ public class ChatActivity extends AppCompatActivity implements
     ListView listView;
     List<ChatItem> chatItems;
     private String chatSession = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,36 +111,41 @@ public class ChatActivity extends AppCompatActivity implements
         chatMessages = new ArrayList<ChatMessage>();
         ChatMessage itemhim = new ChatMessage(R.drawable.click,0,"this is chat message from him","HIM");
         ChatMessage item = new ChatMessage(R.drawable.click,0,"this is chat message from me","ME");
-        ChatMessage image = new ChatMessage(R.drawable.click,R.drawable.common_plus_signin_btn_icon_dark,null,"HIM");
+        ChatMessage imagehim = new ChatMessage(R.drawable.click,R.drawable.common_plus_signin_btn_icon_dark,null,"HIM");
+        ChatMessage imageme = new ChatMessage(R.drawable.click,R.drawable.common_plus_signin_btn_icon_dark,null,"ME");
+
         chatMessages.add(item);
         chatMessages.add(itemhim);
         chatMessages.add(item);
-        chatMessages.add(image);
+        chatMessages.add(imagehim);
+        chatMessages.add(itemhim);
+        chatMessages.add(imageme);
+        chatMessages.add(itemhim);
+        chatMessages.add(imagehim);
+        chatMessages.add(item);
+        chatMessages.add(itemhim);
+        chatMessages.add(imageme);
+        chatMessages.add(item);
+        chatMessages.add(itemhim);
+        chatMessages.add(imagehim);
+        chatMessages.add(itemhim);
         chatMessages.add(itemhim);
         chatMessages.add(item);
         chatMessages.add(itemhim);
-        chatMessages.add(image);
         chatMessages.add(item);
+        chatMessages.add(imagehim);
         chatMessages.add(itemhim);
-        chatMessages.add(item);
-        chatMessages.add(item);
-        chatMessages.add(itemhim);
-        chatMessages.add(image);
-        chatMessages.add(itemhim);
-        chatMessages.add(itemhim);
-        chatMessages.add(item);
-        chatMessages.add(itemhim);
-        chatMessages.add(item);
-        chatMessages.add(image);
-        chatMessages.add(itemhim);
-        chatMessages.add(item);
+        chatMessages.add(imageme);
         chatMessages.add(itemhim);
         chatMessages.add(itemhim);
 
         listView = (ListView) findViewById(R.id.chat_listView);
-        CustomChatMessageAdapter adapter = new CustomChatMessageAdapter(this, R.layout.chat_message, chatMessages);
-        listView.setAdapter(adapter);
+        final RelativeLayout chatClick = (RelativeLayout) findViewById(R.id.chat_click);
+        final ImageView expandedImageView = (ImageView) findViewById(
+                R.id.expanded_image);
 
+        CustomChatMessageAdapter adapter = new CustomChatMessageAdapter(this, R.layout.chat_message, chatMessages,chatClick,expandedImageView);
+        listView.setAdapter(adapter);
     }
 
     @Override

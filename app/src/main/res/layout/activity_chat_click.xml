@@ -38,4 +38,10 @@
         android:layout_toRightOf="@+id/clickPicture"
         android:layout_alignParentBottom="true"
         />
+    <ImageView
+        android:id="@+id/expanded_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        android:contentDescription="description_zoom_touch_close" />
     </RelativeLayout>

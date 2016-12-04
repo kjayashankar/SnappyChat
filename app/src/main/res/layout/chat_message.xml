@@ -31,6 +31,15 @@
         android:paddingRight="10dp"
         android:layout_toRightOf="@+id/icon"
         />
+    <ImageView
+        android:id="@+id/chat_image_left"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:contentDescription=""
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_toLeftOf="@+id/icon"
+        />
 
     <TextView
         android:id="@+id/chat_text_left"
