@@ -19,4 +19,5 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="title_activity_post_picture">PostPicture</string>
     <string name="title_activity_chat_click">ChatClick</string>
+    <string name="title_activity_search">SearchActivity</string>
 </resources>
